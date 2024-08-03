@@ -1,6 +1,6 @@
 import { HeartIcon } from "@heroicons/react/24/outline";
 
-function NavBar() {
+function NavBar({ numOfResult }) {
   return (
     <div className="flex justify-between items-center bg-gray-700 rounded-xl my-3 mx-2 p-2">
       <div className="text-sm md:text-base">
@@ -16,7 +16,7 @@ function NavBar() {
         />
       </div>
       <div className="hidden md:flex">
-        <p>Found X Results</p>
+        <p>Found {numOfResult} Results</p>
       </div>
       <div className=" hidden md:flex">
         <button className="relative">

@@ -5,7 +5,7 @@ function CharacterDetail() {
   return (
     <div className="grid grid-cols-12 gap-y-10 m-3 mt-5 md:mt-0">
       <div className="col-span-12">
-        <div className="flex flex-row bg-slate-800 rounded-lg overflow-hidden">
+        <div className="flex flex-row bg-gray-800 rounded-lg overflow-hidden">
           <div className="w-44 md:w-48">
             <img src={character.image} className="w-full" alt="" />
           </div>
@@ -13,7 +13,7 @@ function CharacterDetail() {
             <div className="flex justify-between items-center p-3">
               <div className="flex">
                 <div className="flex flex-col justify-start">
-                  <div className="flex justify-start items-center">
+                  <div className="flex justify-start items-center cursor-pointer">
                     <span>{character.gender === "Male" ? "👨" : "👩"}</span>
                     <p>{character.name}</p>
                   </div>
@@ -66,11 +66,11 @@ function CharacterDetail() {
                     className="flex justify-between items-center text-sm text-gray-400"
                     key={index}
                   >
-                    <div>
+                    <div className="cursor-pointer">
                       {String(index + 1).padStart(2, "0")} - {item.episode} :{" "}
                       <strong>{item.name}</strong>
                     </div>
-                    <div className="bg-gray-600 py-1 px-3 rounded-lg">
+                    <div className="bg-gray-600 cursor-pointer py-1 px-3 rounded-lg">
                       {item.air_date}
                     </div>
                   </li>
