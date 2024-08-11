@@ -4,6 +4,7 @@ import CharacterList from "./components/CharacterList";
 import NavBar from "./components/NavBar";
 import Loader from "./components/Loader";
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -13,12 +14,13 @@ function App() {
     async function fetcHData() {
       try {
         setIsLoading(true);
-        const res = await fetch("https://rickandmortyapi.com/api/character");
-        if (!res.ok) throw new Error("somethiong went wrong");
-        const data = await res.json();
+        const { data } = await axios.get(
+          "https://rickandmortyapi.com/api/character"
+        );
+
         setCharacters(data.results.slice(0, 3));
       } catch (err) {
-        toast.error(err.message);
+        toast.error(err.response.data.error);
       } finally {
         setIsLoading(false);
       }
