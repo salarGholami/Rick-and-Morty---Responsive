@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { allCharacters } from "../data/data";
 import CharacterDetail from "./components/CharacterDetail";
 import CharacterList from "./components/CharacterList";
@@ -6,6 +6,13 @@ import NavBar from "./components/NavBar";
 
 function App() {
   const [characters, setCharacters] = useState(allCharacters);
+
+  useEffect(() => {
+    fetch("https://rickandmortyapi.com/api/character")
+      .then((res) => res.json())
+      .then((data) => setCharacters(data.results.slice(0, 5)));
+  }, []);
+
   return (
     <div className="">
       <div className="container mx-auto">
