@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
-import { allCharacters } from "../data/data";
 import CharacterDetail from "./components/CharacterDetail";
 import CharacterList from "./components/CharacterList";
 import NavBar from "./components/NavBar";
+import Loader from "./components/Loader";
 
 function App() {
-  const [characters, setCharacters] = useState(allCharacters);
+  const [characters, setCharacters] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetch("https://rickandmortyapi.com/api/character")
-      .then((res) => res.json())
-      .then((data) => setCharacters(data.results.slice(0, 5)));
+    async function fetcHData() {
+      setIsLoading(true);
+      const res = await fetch("https://rickandmortyapi.com/api/character");
+      const data = await res.json();
+      setCharacters(data.results.slice(0, 5));
+      setIsLoading(false);
+    }
+    fetcHData();
   }, []);
 
   return (
@@ -21,7 +27,7 @@ function App() {
             <NavBar numOfResult={characters.length} />
           </div>
           <div className="col-span-12 md:col-span-5 ">
-            <CharacterList characters={characters} />
+            {isLoading ? <Loader /> : <CharacterList characters={characters} />}
           </div>
           <div className="col-span-12 md:col-span-7">
             <CharacterDetail />
