@@ -15,6 +15,7 @@ function App() {
   const [characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
+  const [selectedId, serSelectedId] = useState(null);
 
   useEffect(() => {
     async function fetcHData() {
@@ -41,6 +42,10 @@ function App() {
     fetcHData();
   }, [query]);
 
+  const onSelectCharacter = (id) => {
+    serSelectedId((prevId) => (prevId === id ? null : id));
+  };
+
   return (
     <div className="">
       <Toaster />
@@ -59,10 +64,18 @@ function App() {
             </NavBar>
           </div>
           <div className="col-span-12 md:col-span-5">
-            {isLoading ? <Loader /> : <CharacterList characters={characters} />}
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <CharacterList
+                characters={characters}
+                selectedId={selectedId}
+                onSelectCharacter={onSelectCharacter}
+              />
+            )}
           </div>
           <div className="col-span-12 md:col-span-7">
-            <CharacterDetail />
+            <CharacterDetail selectedId={selectedId} />
           </div>
         </div>
       </div>

@@ -1,12 +1,15 @@
-import { EyeIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
-
-function CharacterList({characters}) {
- 
+function CharacterList({ characters, onSelectCharacter, selectedId }) {
   return (
     <div className="grid grid-cols-12 my-3 mx-2 gap-5">
       {characters.map((item) => (
-        <Character item={item} key={item.id} />
+        <Character
+          item={item}
+          key={item.id}
+          onSelectCharacter={onSelectCharacter}
+          selectedId={selectedId}
+        />
       ))}
     </div>
   );
@@ -14,11 +17,11 @@ function CharacterList({characters}) {
 
 export default CharacterList;
 
-function Character({ item }) {
+function Character({ item, onSelectCharacter, selectedId }) {
   return (
     <div className="col-span-12">
       <div className="grid grid-cols-12">
-        <div className="col-span-12 bg-gray-800 hover:bg-gray-700 cursor-pointer rounded-xl">
+        <div className="col-span-12 bg-gray-800 hover:bg-gray-700  rounded-xl">
           <div className="flex justify-between items-center p-3">
             <div className="flex">
               <div className="w-14">
@@ -34,12 +37,17 @@ function Character({ item }) {
                       <span className="bg-green-700 w-2 h-2 flex justify-center items-center rounded-full"></span>
                     )}
                   </div>
-                  <CharacterInfo item={item}/>
+                  <CharacterInfo item={item} />
                 </div>
               </div>
             </div>
-            <div className=" w-5 text-red-700">
-              <EyeIcon />
+            <div className="">
+              <button
+                className="w-5 cursor-pointer text-red-700"
+                onClick={() => onSelectCharacter(item.id)}
+              >
+                {selectedId === item.id ? <EyeSlashIcon /> : <EyeIcon />}
+              </button>
             </div>
           </div>
         </div>
