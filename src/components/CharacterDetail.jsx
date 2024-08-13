@@ -31,7 +31,9 @@ function CharacterDetail({ selectedId }) {
         setIsLoading(false);
       }
     }
+ 
 
+    
     if (selectedId) fetchData();
   }, [selectedId]);
 
