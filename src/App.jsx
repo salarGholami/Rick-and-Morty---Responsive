@@ -16,6 +16,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedId, serSelectedId] = useState(null);
+  const [favourites, setFavourites] = useState([]);
 
   useEffect(() => {
     async function fetcHData() {
@@ -25,7 +26,7 @@ function App() {
           `https://rickandmortyapi.com/api/character/?name=${query}`
         );
 
-        setCharacters(data.results.slice(0, 3));
+        setCharacters(data.results.slice(0, 5));
       } catch (err) {
         setCharacters([]);
         toast.error(err.response.data.error);
@@ -46,6 +47,12 @@ function App() {
     serSelectedId((prevId) => (prevId === id ? null : id));
   };
 
+  const handleAddFavourite = (charr) => {
+    setFavourites((prevFav) => [...prevFav, charr]);
+  };
+
+  const isAddToFavourite = favourites.map((fav) => fav.id).includes(selectedId);
+
   return (
     <div className="">
       <Toaster />
@@ -59,7 +66,7 @@ function App() {
                 <SearchResult numOfResult={characters.length} />
               </div>
               <div className="hidden md:flex">
-                <Favourite />
+                <Favourite numOfFavourites={favourites.length} />
               </div>
             </NavBar>
           </div>
@@ -75,7 +82,11 @@ function App() {
             )}
           </div>
           <div className="col-span-12 md:col-span-7">
-            <CharacterDetail selectedId={selectedId} />
+            <CharacterDetail
+              selectedId={selectedId}
+              onAddFavourite={handleAddFavourite}
+              isAddToFavourite={isAddToFavourite}
+            />
           </div>
         </div>
       </div>

@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import Loader from "./Loader";
 import toast from "react-hot-toast";
 
-function CharacterDetail({ selectedId }) {
+function CharacterDetail({ selectedId, onAddFavourite, isAddToFavourite }) {
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [episodes,setEpisodes] = useState([]);
+  const [episodes, setEpisodes] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -31,9 +31,7 @@ function CharacterDetail({ selectedId }) {
         setIsLoading(false);
       }
     }
- 
 
-    
     if (selectedId) fetchData();
   }, [selectedId]);
 
@@ -52,7 +50,7 @@ function CharacterDetail({ selectedId }) {
     );
 
   return (
-    <div className="grid grid-cols-12 gap-y-10 m-3 mt-5 md:mt-0">
+    <div className="grid grid-cols-12 gap-y-5 md:gap-y-6 m-3 mt-7 md:mt-3">
       <div className="col-span-12">
         <div className="flex flex-row bg-gray-800 rounded-lg overflow-hidden">
           <div className="w-44 md:w-48">
@@ -78,16 +76,23 @@ function CharacterDetail({ selectedId }) {
                       {character.status} - {character.species}
                     </div>
                   </div>
-                  <div className="flex flex-col mx-2 my-6">
+                  <div className="flex flex-col mx-2 my-4 md:my-6">
                     <div className="text-sm text-gray-400">
                       last know location :
                     </div>
                     <div className="text-sm">{character.location.name}</div>
                   </div>
                   <div className="">
-                    <button className="bg-gray-500 p-2 text-sm rounded-xl">
+                    {isAddToFavourite ? (
+                      <p className="bg-slate-600  text-sm ">Allready added To Favourites ✅</p>
+                    ) : (
+                      <button
+                      className="bg-gray-500 p-2 text-sm rounded-xl"
+                      onClick={() => onAddFavourite(character)}
+                    >
                       Add to Favourite
                     </button>
+                    )}
                   </div>
                 </div>
               </div>

@@ -10,12 +10,12 @@ function NavBar({ children }) {
 
 export default NavBar;
 
-export function Favourite() {
+export function Favourite({ numOfFavourites }) {
   return (
     <button className="relative">
       <HeartIcon className="w-6 h-6 mr-2 text-red-600" />
       <span className="absolute bottom-3 right-0 w-2 h-2 p-2 rounded-full bg-red-600 flex justify-center items-center text-xs">
-        4
+        {numOfFavourites}
       </span>
     </button>
   );
