@@ -18,6 +18,7 @@ function App() {
   const [selectedId, serSelectedId] = useState(null);
   const [favourites, setFavourites] = useState([]);
 
+
   useEffect(() => {
     async function fetcHData() {
       try {
@@ -53,6 +54,9 @@ function App() {
 
   const isAddToFavourite = favourites.map((fav) => fav.id).includes(selectedId);
 
+  const HandelDeleteFavourite = (id) => {
+    setFavourites((prevFav) => prevFav.filter((fav) => fav.id !== id));
+  };
   return (
     <div className="">
       <Toaster />
@@ -66,7 +70,11 @@ function App() {
                 <SearchResult numOfResult={characters.length} />
               </div>
               <div className="hidden md:flex">
-                <Favourite numOfFavourites={favourites.length} />
+                <Favourite
+                  favourites={favourites}
+   
+                  onDeleteFavourite={HandelDeleteFavourite}
+                />
               </div>
             </NavBar>
           </div>

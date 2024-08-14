@@ -99,7 +99,7 @@ function CharacterSubInfo({ character, isAddToFavourite, onAddFavourite }) {
               </div>
               <div className="">
                 {isAddToFavourite ? (
-                  <p className="text-slate-400 text-sm ml-2">
+                  <p className="text-slate-400 text-sm ">
                     Allready added To Favourites ✅
                   </p>
                 ) : (

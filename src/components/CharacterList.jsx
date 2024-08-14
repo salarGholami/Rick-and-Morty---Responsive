@@ -4,12 +4,14 @@ function CharacterList({ characters, onSelectCharacter, selectedId }) {
   return (
     <div className="grid grid-cols-12 my-3 mx-2 gap-5">
       {characters.map((item) => (
-        <Character
-          item={item}
-          key={item.id}
-          onSelectCharacter={onSelectCharacter}
-          selectedId={selectedId}
-        />
+        <Character item={item} key={item.id}>
+          <button
+            className="w-5 cursor-pointer text-red-700"
+            onClick={() => onSelectCharacter(item.id)}
+          >
+            {selectedId === item.id ? <EyeSlashIcon /> : <EyeIcon />}
+          </button>
+        </Character>
       ))}
     </div>
   );
@@ -17,7 +19,7 @@ function CharacterList({ characters, onSelectCharacter, selectedId }) {
 
 export default CharacterList;
 
-function Character({ item, onSelectCharacter, selectedId }) {
+export function Character({ item, children }) {
   return (
     <div className="col-span-12">
       <div className="grid grid-cols-12">
@@ -41,14 +43,7 @@ function Character({ item, onSelectCharacter, selectedId }) {
                 </div>
               </div>
             </div>
-            <div className="">
-              <button
-                className="w-5 cursor-pointer text-red-700"
-                onClick={() => onSelectCharacter(item.id)}
-              >
-                {selectedId === item.id ? <EyeSlashIcon /> : <EyeIcon />}
-              </button>
-            </div>
+            <div className="">{children}</div>
           </div>
         </div>
       </div>

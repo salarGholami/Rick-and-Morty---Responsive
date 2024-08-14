@@ -1,4 +1,7 @@
-import { HeartIcon } from "@heroicons/react/24/outline";
+import { HeartIcon, TrashIcon } from "@heroicons/react/24/outline";
+import Modal from "./Modal";
+import { Character } from "./CharacterList";
+import { useState } from "react";
 
 function NavBar({ children }) {
   return (
@@ -10,14 +13,38 @@ function NavBar({ children }) {
 
 export default NavBar;
 
-export function Favourite({ numOfFavourites }) {
+export function Favourite({ favourites, onDeleteFavourite }) {
+  const [showModal, setShowModal] = useState(false);
   return (
-    <button className="relative">
-      <HeartIcon className="w-6 h-6 mr-2 text-red-600" />
-      <span className="absolute bottom-3 right-0 w-2 h-2 p-2 rounded-full bg-red-600 flex justify-center items-center text-xs">
-        {numOfFavourites}
-      </span>
-    </button>
+    <div className="">
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        title="List of Favourites"
+      >
+        <div className=" m-4">
+          {favourites.map((item) => (
+            <Character
+              key={item.id}
+              item={item}
+              selectedId="1"
+              onSelectCharacter={() => {}}
+            >
+              <TrashIcon
+                className="w-8 h-8 text-red-500 hover:border p-1 rounded-full border-red-500 cursor-pointer"
+                onClick={() => onDeleteFavourite(item.id)}
+              />
+            </Character>
+          ))}
+        </div>
+      </Modal>
+      <button className="relative" onClick={() => setShowModal((is) => !is)}>
+        <HeartIcon className="w-6 h-6 mr-2 text-red-600" />
+        <span className="absolute bottom-3 right-0 w-2 h-2 p-2 rounded-full bg-red-600 flex justify-center items-center text-xs">
+          {favourites.length}
+        </span>
+      </button>
+    </div>
   );
 }
 
