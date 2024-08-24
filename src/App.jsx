@@ -16,8 +16,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedId, serSelectedId] = useState(null);
-  const [favourites, setFavourites] = useState([]);
-
+  const [favourites, setFavourites] = useState(
+    () => JSON.parse(localStorage.getItem("FAVOURITES")) || []
+  );
 
   useEffect(() => {
     async function fetcHData() {
@@ -43,6 +44,10 @@ function App() {
 
     fetcHData();
   }, [query]);
+
+useEffect(() => {
+  localStorage.setItem("FAVOURITES", JSON.stringify(favourites));
+}, [favourites]);
 
   const onSelectCharacter = (id) => {
     serSelectedId((prevId) => (prevId === id ? null : id));
@@ -72,7 +77,6 @@ function App() {
               <div className="hidden md:flex">
                 <Favourite
                   favourites={favourites}
-   
                   onDeleteFavourite={HandelDeleteFavourite}
                 />
               </div>
